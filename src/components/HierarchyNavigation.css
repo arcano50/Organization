@@ -1,0 +1,198 @@
+* {
+    background-repeat: no-repeat;
+    font-size: 18px;
+}
+
+textarea {
+  width: 100%;
+  resize: none;
+}
+
+button {
+  padding: 2px;
+  cursor: pointer;
+  background-color: #ffffff;
+  border: none;
+}
+
+button:hover{
+  border: 1px solid #cccccc;
+}
+
+button[disabled]{
+    cursor: auto;
+    border: none;
+    background-color: #cccccc;
+    color: #666666;
+}
+
+div {
+    display: block;
+}
+
+h4 {
+    text-align: center; 
+    border-bottom: 1px solid #000; 
+    line-height: 0.1em;
+    margin: 10px 10px 10px 10px; 
+} 
+ 
+h4 span { 
+    background:#fff; 
+    padding:0 10px; 
+}
+
+input{
+    padding: 2px;
+}
+
+input:read-only {
+    border: none;
+    outline: none;
+}
+
+ol{
+    counter-reset: item;
+}
+
+textarea:read-only {
+  border: none;
+  outline: none;
+}
+
+.list-box .item-box li::before{
+    content: counter(item);
+    counter-increment: item;
+    margin: 0px 10px;
+}
+
+.button-box{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.cancel-button{
+  background-image: url('../assets/cancel_50px.png');
+}
+
+.delete-button{
+    background-image: url('../assets/delete_icon_32px.png');
+}
+
+.form{
+    padding: 2px;
+    margin-left: auto;
+}
+
+.form button {
+    margin: 0px auto 0px auto;
+}
+
+.form div {
+    padding: 2px;
+}
+
+.hierarchy-container{
+    width: 90%;
+    margin-left: auto;
+    margin-right: auto;
+    display: flex;
+}
+
+.hierarchy-tree{
+    width: 30%;
+    flex: 1 1 auto;
+    padding: 10px;
+    border: 1px solid #000000;
+}
+
+.item-hierarchy-box{
+    list-style-type: none;
+    text-indent: 25px;
+    background-image: url('../assets/forward_50px.png');
+    background-size: 24px 24px;
+}
+
+.hierarchy-tree-container .hierarchy-tree-container .item-hierarchy-box{
+    text-indent: 50px;
+    background-position-x: 25px;
+}
+
+.hierarchy-tree-container .hierarchy-tree-container .hierarchy-tree-container .item-hierarchy-box{
+    text-indent: 75px;
+    background-position-x: 50px;
+}
+
+.hierarchy-tree-container .hierarchy-tree-container .hierarchy-tree-container .hierarchy-tree-container .item-hierarchy-box{
+    text-indent: 100px;
+    background-position-x: 75px;
+}
+
+.level-information{
+    width: 70%;
+    padding: 10px;
+}
+
+.list-box{
+    list-style: none;
+    padding: 10px;
+    align-items: center;
+}
+
+.item-box{
+    padding: 2px;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    word-break: normal;
+}
+
+.item-box:hover{
+    background-color: #f2f2f2;
+    cursor: pointer;
+}
+
+.list-box .item-box:hover .button-box{
+    visibility: visible;
+}
+
+.list-box .item-box .button-box{
+    display: inline;
+    visibility: hidden;
+}
+
+.row .button-box{
+    padding: 10px;
+    width: 100px;
+    margin-right: auto;
+}
+
+.row .button-box .small-button{
+    float: none;
+}
+
+.row{
+    display: flex;
+}
+
+.column{
+    width: 50%;
+}
+
+.save-button{
+  background-image: url('../assets/save_as_80px.png');
+}
+
+.small-button{
+    float: right;
+    height: 28px;
+    width: 28px;
+    background-size: 26px 26px;
+    background-position: center;
+}
+
+.edit-button{
+  background-image: url('../assets/edit_property_26px.png');
+  background-size: 24px 24px;
+}
