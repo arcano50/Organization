@@ -1,6 +1,7 @@
 * {
     background-repeat: no-repeat;
     font-size: 18px;
+    font: 16px/1.4 Lucida Grande,Lucida Sans Unicode,Lucida Sans,Garuda,Verdana,Tahoma,sans-serif;
 }
 
 textarea {
@@ -11,7 +12,7 @@ textarea {
 button {
   padding: 2px;
   cursor: pointer;
-  background-color: #ffffff;
+  background-color: transparent;
   border: none;
 }
 
@@ -43,21 +44,28 @@ h4 span {
 }
 
 input{
-    padding: 2px;
+    padding: 5px;
+    width: 90%;
+    margin-right: 10px;
 }
 
-input:read-only {
+input:read-only, textarea:read-only {
     border: none;
     outline: none;
 }
 
-ol{
-    counter-reset: item;
+label{
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    word-break: normal;
 }
 
-textarea:read-only {
-  border: none;
-  outline: none;
+ol, ul{
+    counter-reset: item;
+    white-space: nowrap;
+    overflow-x:hidden;
+    overflow-y: hidden;
 }
 
 .list-box .item-box li::before{
@@ -72,6 +80,12 @@ textarea:read-only {
     justify-content: center;
 }
 
+
+
+.ReactModal__Content .personal-information-box .row .button-box{
+  visibility: hidden;
+}
+
 .cancel-button{
   background-image: url('../assets/cancel_50px.png');
 }
@@ -80,8 +94,12 @@ textarea:read-only {
     background-image: url('../assets/delete_icon_32px.png');
 }
 
+.add-button{
+  background-image: url('../assets/plus_math_50px.png');
+}
+
 .form{
-    padding: 2px;
+    padding: 5px;
     margin-left: auto;
 }
 
@@ -101,32 +119,26 @@ textarea:read-only {
 }
 
 .hierarchy-tree{
-    width: 30%;
-    flex: 1 1 auto;
+    width: 400px;
+    height: 600px;
     padding: 10px;
     border: 1px solid #000000;
 }
 
+.flex-in-line{
+  display: inline;
+}
+
 .item-hierarchy-box{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    white-space: nowrap;
+    width: 100%;
     list-style-type: none;
     text-indent: 25px;
     background-image: url('../assets/forward_50px.png');
     background-size: 24px 24px;
-}
-
-.hierarchy-tree-container .hierarchy-tree-container .item-hierarchy-box{
-    text-indent: 50px;
-    background-position-x: 25px;
-}
-
-.hierarchy-tree-container .hierarchy-tree-container .hierarchy-tree-container .item-hierarchy-box{
-    text-indent: 75px;
-    background-position-x: 50px;
-}
-
-.hierarchy-tree-container .hierarchy-tree-container .hierarchy-tree-container .hierarchy-tree-container .item-hierarchy-box{
-    text-indent: 100px;
-    background-position-x: 75px;
 }
 
 .level-information{
@@ -195,4 +207,10 @@ textarea:read-only {
 .edit-button{
   background-image: url('../assets/edit_property_26px.png');
   background-size: 24px 24px;
+}
+
+.item-hierarchy-box.item-box.contracted .button-box,
+.item-hierarchy-box.item-box.expanded .button-box{
+  position: relative;
+  right: 5px;
 }
