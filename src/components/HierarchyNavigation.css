@@ -68,10 +68,20 @@ ol, ul{
     overflow-y: hidden;
 }
 
+.label-box{
+  position: relative;
+  left: 25px;
+}
+
+.label-box:hover{
+  text-decoration: underline;
+  cursor: pointer;
+}
+
 .list-box .item-box li::before{
     content: counter(item);
     counter-increment: item;
-    margin: 0px 10px;
+    
 }
 
 .button-box{
@@ -80,7 +90,9 @@ ol, ul{
     justify-content: center;
 }
 
-
+.ReactModal__Content{
+  background: white;
+}
 
 .ReactModal__Content .personal-information-box .row .button-box{
   visibility: hidden;
@@ -135,8 +147,6 @@ ol, ul{
     justify-content: space-between;
     white-space: nowrap;
     width: 100%;
-    list-style-type: none;
-    text-indent: 25px;
     background-image: url('../assets/forward_50px.png');
     background-size: 24px 24px;
 }
@@ -147,7 +157,6 @@ ol, ul{
 }
 
 .list-box{
-    list-style: none;
     padding: 10px;
     align-items: center;
 }
@@ -170,8 +179,10 @@ ol, ul{
 }
 
 .list-box .item-box .button-box{
+    position: relative;
     display: inline;
     visibility: hidden;
+    right: 2px;
 }
 
 .row .button-box{
@@ -214,3 +225,5 @@ ol, ul{
   position: relative;
   right: 5px;
 }
+
+

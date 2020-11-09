@@ -7,6 +7,13 @@ export default function App() {
   const [data, setVar] = useState(
     {id:0, name:'Organización', childrenCollection : [
       {id: 1, name: 'Coordinacion Costa Rica',
+        cardId: 123456,
+        country: 'Costa Rica',
+        state:'Puntarenas',
+        city:'Buenos Aires',
+        address: 'Otro',
+        telephoneCollection: [11111111,2222222,33333333,44444444],
+        emailCollection: ['email@gmail.com','email@hotmail.com','email@live.com'],
         memberCollection:[{id:1, name:'Miembro de las fuerzas armadas'}],
         childrenCollection: [
           {id:1, name: 'Zona', 
