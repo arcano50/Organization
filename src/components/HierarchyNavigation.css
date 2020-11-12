@@ -45,8 +45,7 @@ h4 span {
 
 input{
     padding: 5px;
-    width: 90%;
-    margin-right: 10px;
+    width: 100%;
 }
 
 input:read-only, textarea:read-only {
@@ -62,26 +61,24 @@ label{
 }
 
 ol, ul{
-    counter-reset: item;
+    list-style: none;
+    display: list-item;
     white-space: nowrap;
     overflow-x:hidden;
     overflow-y: hidden;
+    padding-inline-start: 25px;
 }
 
 .label-box{
+  display: flex;
+  align-items: center;
   position: relative;
-  left: 25px;
+  left: 0px;
 }
 
 .label-box:hover{
   text-decoration: underline;
   cursor: pointer;
-}
-
-.list-box .item-box li::before{
-    content: counter(item);
-    counter-increment: item;
-    
 }
 
 .button-box{
@@ -107,7 +104,28 @@ ol, ul{
 }
 
 .add-button{
-  background-image: url('../assets/plus_math_50px.png');
+    background-image: url('../assets/plus_math_50px.png');
+}
+
+.expand-image{
+  display: block;
+    background: url('../assets/forward_50px.png') no-repeat;
+    background-position: center;
+    width: 30px;
+    height: 24px;
+}
+
+.expand-image.expanded::before{
+  transform: rotate(90);
+}
+
+.expand-image.expanded::after{
+  transform: rotate(-90);
+}
+
+.default-item{
+  text-align: center;
+  font-style: italic;
 }
 
 .form{
@@ -144,11 +162,14 @@ ol, ul{
 .item-hierarchy-box{
     display: flex;
     flex-direction: row;
-    justify-content: space-between;
-    white-space: nowrap;
     width: 100%;
-    background-image: url('../assets/forward_50px.png');
-    background-size: 24px 24px;
+}
+
+.pair-order{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  width: 100%;
 }
 
 .level-information{
@@ -200,6 +221,7 @@ ol, ul{
 }
 
 .column{
+    padding: 10px;
     width: 50%;
 }
 
@@ -221,9 +243,26 @@ ol, ul{
 }
 
 .item-hierarchy-box.item-box.contracted .button-box,
-.item-hierarchy-box.item-box.expanded .button-box{
+.item-hierarchy-box.item-box .button-box{
   position: relative;
+  float: right;
   right: 5px;
 }
 
+.item-hierarchy-box.item-box.expanded .expand-image{
+  transition: transform 1s; 
+  transform: rotate(90deg);
+}
 
+.item-hierarchy-box.item-box.expanded:active .expand-image{ 
+  transform: rotate(-90deg);
+}
+
+.item-hierarchy-box.item-box:active .expand-image{
+  transition: transform 1s; 
+  transform: rotate(90deg);
+}
+
+.item-hierarchy-box.item-box .expand-image{
+  transition: transform 1s; 
+}
