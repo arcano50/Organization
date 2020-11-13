@@ -1,11 +1,12 @@
 import http from "./http-common";
 
-const create = data => {   return http.post("/tutorials/json", data); };
+const getData = () =>
+  http.get("/getData");
 
-const test = data => {   const testData = {"foo1":"bar1","foo2":"bar2"};   return http.post("/post", testData); };
+const addHierarchyElement = (parent, number, name, leader) => 
+  http.post('/addChildren', JSON.stringify({parent, number, name, leader}))
 
-const getData = () => {
-  return http.get("/getCoordination");
-}
+const addMember = (parent, id, cardId, name, lastname) =>
+  http.post('/addMember', JSON.stringify({parent, id, cardId, name, lastname}))
 
-export default { test, create, getData }
+export default { addHierarchyElement, getData, addMember }

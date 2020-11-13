@@ -94,6 +94,11 @@ ol, ul{
 .ReactModal__Content .personal-information-box .row .button-box{
   visibility: hidden;
 }
+.ReactModal__Content button{
+  border: 1px solid black;
+  margin-left: auto;
+  margin-right: auto;
+}
 
 .cancel-button{
   background-image: url('../assets/cancel_50px.png');
@@ -105,6 +110,19 @@ ol, ul{
 
 .add-button{
     background-image: url('../assets/plus_math_50px.png');
+}
+
+.upgrade-button{
+  background-image: url('../assets/double_up_50px.png');
+}
+
+.disable-button{
+  background-image: url('../assets/unavailable_32px.png');
+}
+
+.invert{
+  transition: transform 0s;
+  transform: rotate(180deg);
 }
 
 .expand-image{

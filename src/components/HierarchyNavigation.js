@@ -4,6 +4,7 @@ import Modal from 'react-modal'
 import Select from 'react-select'
 import { useForm } from "react-hook-form"
 import './HierarchyNavigation.css'
+import Services from '../services/ComunityServices'
 //Modal.setAppElement('#yourAppElement')
 
 export default ( {data} ) => {
@@ -33,15 +34,17 @@ export default ( {data} ) => {
 
   const [modalIsOpen, setIsOpen] = React.useState(false);
   function openModal(node) {
-    node.preventDefault()
     node.stopPropagation()
+    node.preventDefault()
     let item = node.target
     console.log(item)
     while (!item.classList.contains('item-box'))
       item = item.parentNode
-    let index = item.getAttribute('index')
+    let index = item.getAttribute('index').split('.')
+    index.push('0')
     setIsOpen(true)
-    setIndex(index.split('.'))
+    console.log(index)
+    setIndex(index)
   }
   function afterOpenModal() {
     // references are now sync'd and can be accessed.
@@ -68,54 +71,66 @@ export default ( {data} ) => {
   let showLevel = ( current ) => {
     current.stopPropagation()
     current.preventDefault()
-    let item = node.target
+    let item = current.target
     while (!item.classList.contains('item-box'))
       item = item.parentNode
-    let path = item.getAttribute('index').split('.')
+    let index = item.getAttribute('index').split('.')
+    setIndex([...index])
     let level = hierarchy
     let id
-    path.shift()
-    while ((id = path.shift()) !== undefined){
+    index.shift()
+    while ((id = index.shift()) !== undefined){
       level = level.childrenCollection.find(node => node.id == id)
     }
-    setIndex(index)
     setLevel(level)
+    setIsShowingLevel(true)
     return true;
   }
 
-  let AdministrativeLevelInformation = ({index}) => {
+  let AdministrativeLevelInformation = ({index, isToAdd}) => {
     const { handleSubmit, register, errors } = useForm()
+
+    console.log(index)
 
     let CoordinationInformation = () => {
       return (
         <>
-          <BasicCoordinationInformation/>
           {
             index.length == 2 ? 
             <>
-              <ContactInformation _object={level}/>
-              <AddressInformation _object={level}/>
+              <BasicElementInformation _isToAdd={isToAdd}/>
+              <ContactInformation _object={level} _isToAdd={isToAdd}/>
+              <AddressInformation _object={level} _isToAdd={isToAdd}/>
             </>
             :
-            null
+            <BasicElementInformation _isGroup={index.length==5} _isToAdd={isToAdd}/>
           }
         </>
       )
     }
 
-    let BasicCoordinationInformation = () => {
+    let BasicElementInformation = ({_isGroup, _isToAdd}) => {
       const [readOnly, setReadOnly] = useState(true)
-      const [cardId, setCardId] = useState('')
+      const [isGroup, setIsGroup] = useState(false)
+      const [isCoordination, setIsCoordination] = useState(false)
+      const [legalId, setLegalId] = useState('')
       const [name, setName] = useState('')
+      const [number, setNumber] = useState()
       const [website, setWebsite] = useState('')
 
       useEffect(() => {
-        if (typeof level !== 'undefined'){
+        if(_isToAdd===undefined)
+          _isToAdd = false
+        if (level !== undefined && !_isToAdd){
+          setLegalId(level.legalId)
           setName(level.name)
+          setNumber(level.number)
           setWebsite(level.website)
-          setCardId(level.cardId)
         }
         else setReadOnly(false)
+        if (_isGroup === undefined)
+          setIsCoordination(true)
+        else setIsGroup(_isGroup)
         
       }, [])
 
@@ -125,13 +140,14 @@ export default ( {data} ) => {
           <div className= 'row'>
             <form className='form'>
               <div>
-                <label>Identificación: </label>
+                <label hidden={!isCoordination}>Identificación: </label>
               </div>
               <input
                 readOnly={readOnly}
+                hidden={!isCoordination}
                 name='cardId'
-                value={cardId}
-                onChange={e => setCardId(e.target.value)}
+                value={legalId}
+                onChange={e => setLegalId(e.target.value)}
                 ref={
                   register({
                       required: 'Requerido',
@@ -143,6 +159,27 @@ export default ( {data} ) => {
                 }
               />
               {errors.cardId && errors.cardId.message}
+
+              <div>
+                <label hidden={!isGroup}>Número de grupo: </label>
+              </div>
+              <input
+                readOnly={readOnly}
+                hidden={!isGroup}
+                name='number'
+                value={number}
+                onChange={e => setNumber(e.target.value)}
+                ref={
+                  register({
+                    required: 'Requerido',
+                    pattern:{
+                      value:"[0-9]",
+                      message: "Ingrese un número"
+                    }
+                  })
+                }
+              />
+              {errors.number && errors.number.message}
 
               <div>
                 <label>Nombre: </label>
@@ -165,10 +202,11 @@ export default ( {data} ) => {
               {errors.name && errors.name.message}
 
               <div>
-                <label>Sitio web: </label>
+                <label hidden={!isCoordination}>Sitio web: </label>
               </div>
               <input
                 readOnly={readOnly}
+                hidden={!isCoordination}
                 name='website'
                 value={website}
                 onChange={e => setWebsite(e.target.value)}
@@ -185,36 +223,31 @@ export default ( {data} ) => {
               {errors.website && errors.website.message}
             </form>
             <div className='button-box'>
-              <button className='small-button edit-button' title='Editar' hidden={!readOnly} onClick={() => setReadOnly(false)}/>
-              <button className='small-button save-button' title='Guardar' hidden={readOnly} onClick={() => setReadOnly(true)}/>
-              <button className='small-button cancel-button' title='Cancelar' hidden={ readOnly} onClick={() => setReadOnly(true)}/>
+              <button className='small-button edit-button' title='Editar' hidden={!readOnly||_isToAdd} onClick={() => setReadOnly(false)}/>
+              <button className='small-button save-button' title='Guardar' hidden={readOnly||!_isToAdd} onClick={() => setReadOnly(true)}/>
+              <button className='small-button cancel-button' title='Cancelar' hidden={ readOnly||_isToAdd} onClick={() => setReadOnly(true)}/>
             </div>
           </div>
         </>
       )
     }
 
-    let NodeInformation = () =>
-      <div>
-        <label>Nombre: </label> {level.name}
-        <button >Nuevo miembro</button>
-      </div>
-
     return (
       <div>
         <CoordinationInformation/>
         <h4><span>Lista de miembros</span></h4>
+        <button onClick={() => {setUser(); setIsShowingLevel(false)}}>Nuevo miembro</button>
         <MemberList/>
       </div>
     )
   }
 
   let _setUser = id => {
-    setUser(() => level.memberCollection.find(member => member.id = id))
+    setUser(() => level.memberCollection.find(member => member.id == id))
     setIsShowingLevel(false)
   }
 
-  let ContactInformation = ( { _object } ) => {
+  let ContactInformation = ( { _object, _isToAdd } ) => {
     const [readOnly, setReadOnly] = useState(true)
     const [emailCollection, setEmailCollection] = useState([])
     const [telephoneCollection, setTelephoneCollection] = useState([])
@@ -265,10 +298,14 @@ export default ( {data} ) => {
           <form className='form'>
             <div className='row'>
               <div className='column'>
-                <ListingTelephoneCollection object={telephoneCollection}/>
+                {
+                  telephoneCollection == null ? null : <ListingTelephoneCollection object={telephoneCollection}/>
+                }
               </div>
               <div className='column'>
-                <ListingEmailCollection object={emailCollection}/>
+                {
+                  telephoneCollection == null ? null : <ListingEmailCollection object={emailCollection}/>
+                }
               </div>
             </div>
           </form>
@@ -277,7 +314,7 @@ export default ( {data} ) => {
     )
   }
 
-  let AddressInformation = ( { _object } ) => {
+  let AddressInformation = ( { _object, _isToAdd } ) => {
     const { handleSubmit, register, errors } = useForm()
     const [readOnly, setReadOnly] = useState(true)
     const [country, setCountry] = useState('')
@@ -286,9 +323,9 @@ export default ( {data} ) => {
     const [address, setAddress] = useState('')
 
     useEffect(() => {
-      if (typeof _object !== 'undefined')
+      if (_object !== undefined)
         user = _object
-      if (typeof user !== 'undefined'){
+      if (user !== undefined && (_isToAdd === undefined)){
         setCountry(user.country)
         setState(user.state)
         setCity(user.city)
@@ -354,7 +391,7 @@ export default ( {data} ) => {
               {errors.address && errors.address.message}
             </div>
           </form>
-          <div className='button-box'>
+          <div className='button-box' hidden={_isToAdd}>
             <button className='small-button edit-button' title='Editar' hidden={!readOnly} onClick={() => setReadOnly(false)}/>
             <button className='small-button save-button' title='Guardar' hidden={readOnly} onClick={() => setReadOnly(true)}/>
             <button className='small-button cancel-button' title='Cancelar' hidden={readOnly} onClick={() => setReadOnly(true)}/>
@@ -377,7 +414,9 @@ export default ( {data} ) => {
             <li className='item-box' key={ member.id } onClick={() => _setUser(member.id)}>
               <label> { member.name } </label>
               <div className='button-box'>
-                <button className='small-button delete-button'/>
+                <button hidden={level.number===undefined} className='small-button delete-button'/>
+                <button className='small-button disable-button'/>
+                <button className='small-button upgrade-button'/>
               </div>
             </li>
           )
@@ -394,7 +433,7 @@ export default ( {data} ) => {
       const [lastname, setLastname] = useState('')
 
       useEffect(() => {
-        if (typeof user !== 'undefined'){
+        if (user !== undefined){
           setName(user.name)
           setLastname(user.lastname)
           setCardId(user.cardId)
@@ -402,6 +441,17 @@ export default ( {data} ) => {
         else setReadOnly(false)
         
       }, [])
+
+      let save = () =>{
+        if((user?.id||0) == 0){
+          let user
+          Services.addMember(level.id, user?.id||0, cardId, name, lastname).then(result => {
+            level.memberCollection.push(result.data)
+            setUser(result.data)
+            console.log(result.data)
+          })
+        }
+      }
 
       return (
         <>
@@ -474,7 +524,7 @@ export default ( {data} ) => {
             </form>
             <div className='button-box'>
               <button className='small-button edit-button' title='Editar' hidden={!readOnly} onClick={() => setReadOnly(false)}/>
-              <button className='small-button save-button' title='Guardar' hidden={readOnly} onClick={() => setReadOnly(true)}/>
+              <button className='small-button save-button' title='Guardar' hidden={readOnly} onClick={() => {setReadOnly(true); save()}}/>
               <button className='small-button cancel-button' title='Cancelar' hidden={ readOnly} onClick={() => setReadOnly(true)}/>
             </div>
           </div>
@@ -504,7 +554,6 @@ export default ( {data} ) => {
       if (key.length > 4)
         return null
       let level = hierarchy
-      console.log(index)
       let id
       key.shift()
       while ((id = key.shift()) !== undefined && level.childrenCollection !== null)
@@ -536,11 +585,12 @@ export default ( {data} ) => {
 
     let nodeAction = ( node ) => {
       node.preventDefault()
+      console.error('¡Qué demonios haces aquí, Fred!')
       let item = node.target
       while (!item.classList.contains('item-box'))
         item = item.parentNode
+
       let parent = item.parentNode
-      console.log(item)
       let index = item.getAttribute('index')
       if (item.classList.contains('expanded')){
         parent.removeChild(parent.lastChild)
@@ -548,7 +598,6 @@ export default ( {data} ) => {
         item.classList.toggle('expanded')
       }
       else{
-        console.log(parent)
         ReactDOM.render(<Expand index={index}/>, parent.lastChild)
         item.classList.toggle('expanded')
       }
@@ -561,16 +610,29 @@ export default ( {data} ) => {
     )
   }
 
-  const ToAdd =  () => {
+  const AddHierarchtElement =  () => {
+    const [readOnly, setReadOnly] = useState(true)
+    const [isGroup, setIsGroup] = useState(false)
+    const [isCoordination, setIsCoordination] = useState(false)
+    const [legalId, setLegalId] = useState('')
+    const [name, setName] = useState('')
+    const [number, setNumber] = useState()
+    const [website, setWebsite] = useState('')
     const [selected, setSelected] = useState(0)
     const [options, setOptions] = useState([])
 
-    const [name, setName] = useState('')
-    const [number, setNumber] = useState(0)
+
+
+
 
     useEffect(() => {
       setOptions([{value: 'Prueba', label:'Prueba 1'}])
     }, [])
+
+    let addElement = () => {
+      let response = Services.addHierarchyElement(number, name, [])
+      console.log(response)
+    }
 
     return (
       <Modal
@@ -581,51 +643,8 @@ export default ( {data} ) => {
         onRequestClose={closeModal}
         style={customStyles}
         contentLabel="Example Modal"> 
-        
-        <div>Agregar un grupo</div>
-        <form className='form'>
-          <div>
-            <div>
-              <label>Nombre: </label>
-            </div>
-            <input
-              placeholder='Ingrese el nombre del nuevo nivel'
-              name='name'
-              value={name}
-              defaultValue='<No definido>'
-            />
-            {/*
-            <select name="cars" id="cars">
-              {list.map( item =>
-                <option value={`${item.name} ${item.name}`}/>)
-                }
-            </select>
-              */}
-            {
-              index.length == 4 ? <>
-                <div>
-                  <label>Número de grupo: </label>
-                </div>
-                <input
-                  placeholder='Ingrese el nombre del nuevo nivel'
-                  name='name'
-                  value={number}
-                  defaultValue='<No definido>'/>
-                <div>
-                  <label>Monitor: </label>
-                </div>
-                <Select
-                  placeholder='Seleccione el monitor'
-                  value={selected}
-                  onChange={selected => setSelected(selected)}
-                  options={options}/>
-              </>
-              :
-              null
-            }
-          </div>
-        </form>
-        <button onClick={closeModal}>Agregar</button>
+
+        <AdministrativeLevelInformation isToAdd={true} index={index}/>
       </Modal>
     )
   }
@@ -655,7 +674,7 @@ export default ( {data} ) => {
     return(<></>)
   return (
       <div className='hierarchy-container'>
-          <ToAdd />
+          <AddHierarchtElement />
           <NewUSer/>
           <div className='hierarchy-tree list-box'>
             <HierarchyTree />
