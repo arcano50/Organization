@@ -1,24 +1,16 @@
 import React, {useState, useEffect} from 'react';
+import { useDispatch } from 'react-redux'
+import action from './redux/action/index';
 import HN from './components/HierarchyNavigation'
-import ComunityServices from './services/ComunityServices';
 
 export default function App() {
-
-  const [data, setVar] = useState({})
+  const dispatch = useDispatch()
 
   useEffect(() => {
-    ComunityServices.getData()
-      .then(result =>
-      setVar({id: 0, name:'Organizacion', childrenCollection:result.data}))
-      .catch(error => console.log(error))
+    dispatch(action.tree.getData())
   }, [])
     
   return (
-    <div>
-      <header>
-        {console.log(data)}
-        <HN data= {data}/>
-      </header>
-    </div>
+    <HN/>
   );
 }

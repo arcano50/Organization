@@ -1,24 +1,10 @@
-import React, {useEffect, useState} from 'react'
-import ReactDOM from 'react-dom';
-import Modal from 'react-modal'
-import Select from 'react-select'
-import { useForm } from "react-hook-form"
+import React from 'react'
+import HierarchyTree from './HierarchyTree'
+import HierarchyInformation from './HierarchyElementInformation'
 import './HierarchyNavigation.css'
-import Services from '../services/ComunityServices'
-//Modal.setAppElement('#yourAppElement')
 
-export default ( {data} ) => {
-
-  const [hierarchy, setHierarchy] = useState(data)
-  const [level, setLevel] = useState(data)
-  let [user, setUser] = useState()
-  const [IsShowingLevel, setIsShowingLevel] = useState(true)
-  const [index, setIndex] = useState([])
-
-  useEffect(() => {
-    setHierarchy(data)
-  }, [data])
-
+export default () => {
+  /*
   const customStyles = {
     content : {
       position: 'absolute',
@@ -32,82 +18,14 @@ export default ( {data} ) => {
     }
   };
 
-  const [modalIsOpen, setIsOpen] = React.useState(false);
-  function openModal(node) {
-    node.stopPropagation()
-    node.preventDefault()
-    let item = node.target
-    console.log(item)
-    while (!item.classList.contains('item-box'))
-      item = item.parentNode
-    let index = item.getAttribute('index').split('.')
-    index.push('0')
-    setIsOpen(true)
-    console.log(index)
-    setIndex(index)
-  }
-  function afterOpenModal() {
-    // references are now sync'd and can be accessed.
-    //subtitle.style.color = '#f00';
-  }
-  function closeModal(){
-    setIsOpen(false);
-  }
-
-  const [modalIsOpen2,setIsOpen2] = React.useState(false);
-  function openModal2(index) {
-    setIsOpen2(true);
-    setIndex(index.split('.'))
-  }
-  function afterOpenModal2() {
-    // references are now sync'd and can be accessed.
-    //subtitle.style.color = '#f00';
-  }
-  function closeModal2(){
-    setIsOpen2(false);
-  }
-
-
-  let showLevel = ( current ) => {
-    current.stopPropagation()
-    current.preventDefault()
-    let item = current.target
-    while (!item.classList.contains('item-box'))
-      item = item.parentNode
-    let index = item.getAttribute('index').split('.')
-    setIndex([...index])
-    let level = hierarchy
-    let id
-    index.shift()
-    while ((id = index.shift()) !== undefined){
-      level = level.childrenCollection.find(node => node.id == id)
-    }
-    setLevel(level)
-    setIsShowingLevel(true)
-    return true;
-  }
+  
 
   let AdministrativeLevelInformation = ({index, isToAdd}) => {
     const { handleSubmit, register, errors } = useForm()
 
     console.log(index)
 
-    let CoordinationInformation = () => {
-      return (
-        <>
-          {
-            index.length == 2 ? 
-            <>
-              <BasicElementInformation _isToAdd={isToAdd}/>
-              <ContactInformation _object={level} _isToAdd={isToAdd}/>
-              <AddressInformation _object={level} _isToAdd={isToAdd}/>
-            </>
-            :
-            <BasicElementInformation _isGroup={index.length==5} _isToAdd={isToAdd}/>
-          }
-        </>
-      )
-    }
+    
 
     let BasicElementInformation = ({_isGroup, _isToAdd}) => {
       const [readOnly, setReadOnly] = useState(true)
@@ -401,27 +319,7 @@ export default ( {data} ) => {
     )
   }
 
-  let MemberList = () => 
-    <ol className='list-box'>
-      {
-        level.memberCollection === undefined ? null :
-          level.memberCollection === null ?
-            <li className='item-box'>
-              <label> &lt;No hay miembros&gt; </label>
-            </li>
-          :
-          level.memberCollection.map( member =>
-            <li className='item-box' key={ member.id } onClick={() => _setUser(member.id)}>
-              <label> { member.name } </label>
-              <div className='button-box'>
-                <button hidden={level.number===undefined} className='small-button delete-button'/>
-                <button className='small-button disable-button'/>
-                <button className='small-button upgrade-button'/>
-              </div>
-            </li>
-          )
-      }
-    </ol>
+  
 
   let UserInformation = () => {
     const { handleSubmit, register, errors } = useForm()
@@ -444,13 +342,13 @@ export default ( {data} ) => {
 
       let save = () =>{
         if((user?.id||0) == 0){
-          let user
+          let user/*
           Services.addMember(level.id, user?.id||0, cardId, name, lastname).then(result => {
             level.memberCollection.push(result.data)
             setUser(result.data)
             console.log(result.data)
           })
-        }
+        }*//*
       }
 
       return (
@@ -539,78 +437,9 @@ export default ( {data} ) => {
       </div>
     )
   }
+  
 
-  let DefaultItem = ( { message } ) =>
-    <li className='default-item'>
-      <label>&lt;{ message }&gt; </label>
-    </li>
 
-  const HierarchyTree = () => {
-
-    console.log('Hierarchy tree has been re-render with data:')
-
-    let Expand = ( { index } ) => {
-      let key = index.split(".")
-      if (key.length > 4)
-        return null
-      let level = hierarchy
-      let id
-      key.shift()
-      while ((id = key.shift()) !== undefined && level.childrenCollection !== null)
-        level = level.childrenCollection.find(node => node.id == id)
-      return (  
-          level.childrenCollection === undefined ? null :
-          level.childrenCollection === null || level.childrenCollection.length == 0 ?
-            <DefaultItem message='No hay elementos'/>
-          :
-            level.childrenCollection.map( node =>
-              <div>
-                <li className='item-hierarchy-box item-box'
-                  index={index + '.' + node.id} onClick={nodeAction}>
-                  <i className='expand-image'/>
-                  <div className='pair-order'>
-                    <label className='label-box' onClick={showLevel}>
-                      { node.name }
-                    </label>
-                    <div className='button-box'>
-                      <button className='small-button add-button' title='Agregar elemento' onClick={openModal}/>
-                    </div>
-                  </div>
-                </li>
-                <ul/>
-              </div>
-            )
-      )
-    }
-
-    let nodeAction = ( node ) => {
-      node.preventDefault()
-      console.error('¡Qué demonios haces aquí, Fred!')
-      let item = node.target
-      while (!item.classList.contains('item-box'))
-        item = item.parentNode
-
-      let parent = item.parentNode
-      let index = item.getAttribute('index')
-      if (item.classList.contains('expanded')){
-        parent.removeChild(parent.lastChild)
-        parent.appendChild(document.createElement('ul'))
-        item.classList.toggle('expanded')
-      }
-      else{
-        ReactDOM.render(<Expand index={index}/>, parent.lastChild)
-        item.classList.toggle('expanded')
-      }
-    }
-    
-    return (
-      <ul>
-        <Expand index='0'/>
-      </ul>
-    )
-  }
-
-  const AddHierarchtElement =  () => {
     const [readOnly, setReadOnly] = useState(true)
     const [isGroup, setIsGroup] = useState(false)
     const [isCoordination, setIsCoordination] = useState(false)
@@ -620,69 +449,15 @@ export default ( {data} ) => {
     const [website, setWebsite] = useState('')
     const [selected, setSelected] = useState(0)
     const [options, setOptions] = useState([])
+*/
 
-
-
-
-
-    useEffect(() => {
-      setOptions([{value: 'Prueba', label:'Prueba 1'}])
-    }, [])
-
-    let addElement = () => {
-      let response = Services.addHierarchyElement(number, name, [])
-      console.log(response)
-    }
-
-    return (
-      <Modal
-        className='none'
-        ariaHideApp={false}
-        isOpen={modalIsOpen}
-        onAfterOpen={afterOpenModal}
-        onRequestClose={closeModal}
-        style={customStyles}
-        contentLabel="Example Modal"> 
-
-        <AdministrativeLevelInformation isToAdd={true} index={index}/>
-      </Modal>
-    )
-  }
-
-  const NewUSer = () => {
-    const [selected, setSelected] = useState(0)
-    const [options, setOptions] = useState([])
-
-    useEffect(() => {
-      setOptions([{value: 'Prueba', label:'Prueba 1'}])
-    }, [])
-    return (
-      <Modal
-        ariaHideApp={false}
-        isOpen={modalIsOpen2}
-        onAfterOpen={afterOpenModal2}
-        onRequestClose={closeModal2}
-        style={customStyles}
-        contentLabel="Example Modal"> 
-        <UserInformation/>
-        <button onClick={closeModal2}>Agregar</button>
-      </Modal>
-    )
-  }
-
-  if(data == {})
-    return(<></>)
   return (
       <div className='hierarchy-container'>
-          <AddHierarchtElement />
-          <NewUSer/>
           <div className='hierarchy-tree list-box'>
             <HierarchyTree />
           </div>
           <div className='level-information'>
-              {
-                IsShowingLevel ? <AdministrativeLevelInformation index={index}/> : <UserInformation/>
-              }
+            <HierarchyInformation/>
           </div>
       </div>
   )

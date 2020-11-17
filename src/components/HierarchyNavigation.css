@@ -4,6 +4,10 @@
     font: 16px/1.4 Lucida Grande,Lucida Sans Unicode,Lucida Sans,Garuda,Verdana,Tahoma,sans-serif;
 }
 
+*,:before,:after {
+  box-sizing: border-box;
+}
+
 textarea {
   width: 100%;
   resize: none;
@@ -149,6 +153,7 @@ ol, ul{
 .form{
     padding: 5px;
     margin-left: auto;
+    margin-right: 15px;
 }
 
 .form button {
@@ -228,6 +233,7 @@ ol, ul{
     padding: 10px;
     width: 100px;
     margin-right: auto;
+    margin-left: 15px;
 }
 
 .row .button-box .small-button{
