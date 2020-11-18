@@ -1,10 +1,17 @@
-const User = (state = {}, action) => {
+const initialState = {
+  user: {},
+  view:0
+}
+
+const UserReducer = (state = initialState, action) => {
   switch (action.type){
     case 'getUser':
-      return action.data
+      return {...state, user: action.data}
+    case 'getView':
+      return {...state, view: action.data}
     default:
-      return {}
+      return state
   }
 }
 
-export default User
+export default UserReducer

@@ -52,7 +52,8 @@ export default () => {
 
     let index = item.getAttribute('index')
     let node = searchElement(index)
-    dispatch( action.element.setHierarchyElement( node ))
+    dispatch( action.element.setHierarchyElement( node )  )
+    dispatch( action.user.setView( 0 ) )
   }
 
   const Expander = ( { index } ) => {

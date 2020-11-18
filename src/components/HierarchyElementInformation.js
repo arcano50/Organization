@@ -1,12 +1,26 @@
-import React, {useEffect, useState} from 'react'
+import React, { useEffect, useState } from 'react'
+import ReactDOM from "react-dom"
+import { BrowserRouter as Router, Switch, Route, useParams } from "react-router-dom"
 import { useDispatch, useSelector } from 'react-redux'
-import { useForm } from "react-hook-form"
+import { useForm } from 'react-hook-form'
 import './HierarchyNavigation.css'
-import action from '../redux/action/element'
+import action from '../redux/action/index'
 
 export default () => {
 
   const level = useSelector(element => element.element.element)
+
+  const dispatch = useDispatch()
+
+  let userDetail = event => {
+    let member = event.target
+    while (!member.classList.contains('item-box'))
+      member = member.parent
+    let id = member.getAttribute('index')
+    let user = level.memberCollection.find(item => item.id == id)
+    dispatch(action.user.setUser(user))
+    dispatch(action.user.setView(1))
+  }
 
   let MemberList = () => 
     <ol className='list-box'>
@@ -18,7 +32,7 @@ export default () => {
             </li>
           :
           level.memberCollection.map( member =>
-            <li className='item-box' key={ member.id }>
+            <li className='item-box' index={ member.id } onClick={userDetail}>
               <label> { member.name } </label>
               <div className='button-box'>
                 <button hidden={level.number===undefined} className='small-button delete-button'/>
@@ -36,27 +50,19 @@ export default () => {
 
     let BasicElementInformation = ({_isGroup, _isToAdd}) => {
       const [readOnly, setReadOnly] = useState(true)
-      const [isGroup, setIsGroup] = useState(false)
-      const [isCoordination, setIsCoordination] = useState(false)
       const [legalId, setLegalId] = useState('')
       const [name, setName] = useState('')
       const [number, setNumber] = useState()
       const [website, setWebsite] = useState('')
 
       useEffect(() => {
-        if(_isToAdd===undefined)
-          _isToAdd = false
-        if (level !== undefined && !_isToAdd){
+        if (level !== undefined){
           setLegalId(level.legalId)
           setName(level.name)
           setNumber(level.number)
           setWebsite(level.website)
         }
         else setReadOnly(false)
-        if (_isGroup === undefined)
-          setIsCoordination(true)
-        else setIsGroup(_isGroup)
-        
       }, [])
 
       switch(level.type){
@@ -67,11 +73,10 @@ export default () => {
               <div className= 'row'>
                 <form className='form'>
                   <div>
-                    <label hidden={!isCoordination}>Identificación: </label>
+                    <label>Identificación: </label>
                   </div>
                   <input
                     readOnly={readOnly}
-                    hidden={!isCoordination}
                     name='cardId'
                     value={legalId}
                     onChange={e => setLegalId(e.target.value)}
@@ -88,11 +93,10 @@ export default () => {
                   {errors.cardId && errors.cardId.message}
 
                   <div>
-                    <label hidden={!isGroup}>Número de grupo: </label>
+                    <label>Número de grupo: </label>
                   </div>
                   <input
                     readOnly={readOnly}
-                    hidden={!isGroup}
                     name='number'
                     value={number}
                     onChange={e => setNumber(e.target.value)}
@@ -129,11 +133,10 @@ export default () => {
                   {errors.name && errors.name.message}
 
                   <div>
-                    <label hidden={!isCoordination}>Sitio web: </label>
+                    <label>Sitio web: </label>
                   </div>
                   <input
                     readOnly={readOnly}
-                    hidden={!isCoordination}
                     name='website'
                     value={website}
                     onChange={e => setWebsite(e.target.value)}
@@ -258,7 +261,8 @@ export default () => {
 
   return (
     <>
-      <AdministrativeLevelInformation _isGroup={false} _isToAdd={false}/>
+      <AdministrativeLevelInformation/>
+      <h4><span>Miembros</span></h4>
       <MemberList/>
     </>
   )
