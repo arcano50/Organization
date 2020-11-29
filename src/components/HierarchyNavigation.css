@@ -173,6 +173,7 @@ ol, ul{
 
 .hierarchy-tree{
     width: 400px;
+    max-width: 400;
     height: 600px;
     padding: 10px;
     border: 1px solid #000000;
@@ -183,6 +184,7 @@ ol, ul{
 }
 
 .item-hierarchy-box{
+    border-bottom: 1px solid #f2f2f2;
     display: flex;
     flex-direction: row;
     width: 100%;

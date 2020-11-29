@@ -1,7 +1,9 @@
 import http from "./http-common";
+import json from '../data'
 
 export const getData = () =>
-  http.get("/getData");
+  json
+  //http.get("/getData");
 
 export const addHierarchyElement = (parent, number, name, leader) => 
   http.post('/addChildren', JSON.stringify({parent, number, name, leader}))
