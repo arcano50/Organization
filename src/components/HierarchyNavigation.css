@@ -73,18 +73,6 @@ ol, ul{
     padding-inline-start: 25px;
 }
 
-.label-box{
-  display: flex;
-  align-items: center;
-  position: relative;
-  left: 0px;
-}
-
-.label-box:hover{
-  text-decoration: underline;
-  cursor: pointer;
-}
-
 .button-box{
     display: flex;
     flex-direction: column;
@@ -124,35 +112,13 @@ ol, ul{
   background-image: url('../assets/unavailable_32px.png');
 }
 
-.invert{
-  transition: transform 0s;
-  transform: rotate(180deg);
-}
-
-.expand-image{
-  display: block;
-    background: url('../assets/forward_50px.png') no-repeat;
-    background-position: center;
-    width: 30px;
-    height: 24px;
-}
-
-.expand-image.expanded::before{
-  transform: rotate(90);
-}
-
-.expand-image.expanded::after{
-  transform: rotate(-90);
-}
-
 .default-item{
   text-align: center;
   font-style: italic;
 }
 
 .form{
-    padding: 5px;
-    margin-left: auto;
+    padding: 10px;
     margin-right: 15px;
 }
 
@@ -171,30 +137,8 @@ ol, ul{
     display: flex;
 }
 
-.hierarchy-tree{
-    width: 400px;
-    max-width: 400;
-    height: 600px;
-    padding: 10px;
-    border: 1px solid #000000;
-}
-
 .flex-in-line{
   display: inline;
-}
-
-.item-hierarchy-box{
-    border-bottom: 1px solid #f2f2f2;
-    display: flex;
-    flex-direction: row;
-    width: 100%;
-}
-
-.pair-order{
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  width: 100%;
 }
 
 .level-information{
@@ -273,22 +217,4 @@ ol, ul{
   position: relative;
   float: right;
   right: 5px;
-}
-
-.item-hierarchy-box.item-box.expanded .expand-image{
-  transition: transform 1s; 
-  transform: rotate(90deg);
-}
-
-.item-hierarchy-box.item-box.expanded:active .expand-image{ 
-  transform: rotate(-90deg);
-}
-
-.item-hierarchy-box.item-box:active .expand-image{
-  transition: transform 1s; 
-  transform: rotate(90deg);
-}
-
-.item-hierarchy-box.item-box .expand-image{
-  transition: transform 1s; 
 }

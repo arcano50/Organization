@@ -5,6 +5,7 @@ import { useSelector } from 'react-redux'
 import { useForm } from 'react-hook-form'
 import User from './User'
 import './HierarchyNavigation.css'
+import Modal from './Modal'
 
 export default () => {
   /*
@@ -35,16 +36,16 @@ export default () => {
 */
   let view = useSelector(user => user.user.view)
   const route = () => {
-    if (view == 0){
+    if (view == 0)
       return (<HierarchyInformation/>)
-    }
-    else{
+    if(view == 1)
       return (<User/>)
-    }
+    return null
   }
 
   return (
       <div className='hierarchy-container'>
+        <Modal/>
           <div className='hierarchy-tree list-box'>
             <HierarchyTree />
           </div>

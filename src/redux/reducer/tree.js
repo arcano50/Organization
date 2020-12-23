@@ -1,7 +1,6 @@
 const initialState = {
     id: 0,
     name:'Organizacion'
-  
 }
 
 const HierarchyTreeReducer = (state = initialState, action) => {

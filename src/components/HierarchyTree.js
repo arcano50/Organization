@@ -2,7 +2,8 @@ import React, {useEffect, useState} from 'react'
 import ReactDOM from 'react-dom';
 import { useDispatch, useSelector} from 'react-redux'
 import action from '../redux/action/index'
-import './HierarchyNavigation.css'
+//import './HierarchyNavigation.css'
+import './HierarchyTree.css'
 
 // eslint-disable-next-line
 export default () => {
@@ -26,6 +27,7 @@ export default () => {
   }
 
   const nodeAction = ( node ) => {
+    console.log('nodeAction')
     let item = node.target
     while (!item.classList.contains('item-box'))
       item = item.parentNode
@@ -43,6 +45,7 @@ export default () => {
   }
 
   const setElement = ( current ) => {
+    console.log('setElement')
     current.preventDefault()
     current.stopPropagation()
 
@@ -54,6 +57,22 @@ export default () => {
     let node = searchElement(index)
     dispatch( action.element.setHierarchyElement( node )  )
     dispatch( action.user.setView( 0 ) )
+  }
+
+  const addElement = (current) => {
+    console.log('addElement')
+    current.preventDefault()
+    current.stopPropagation()
+
+    let item = current.target
+    while (!item.classList.contains('item-box'))
+      item = item.parentNode
+
+    let index = item.getAttribute('index')
+    let node = searchElement(index)
+
+    dispatch( action.modal.setVisibility(true) )
+    dispatch( action.element.setHierarchyElement( node )  )
   }
 
   const Expander = ( { index } ) => {
@@ -77,7 +96,7 @@ export default () => {
                   { node.name }
                 </label>
                 <div className='button-box'>
-                  <button className='small-button add-button' title='Agregar elemento' onClick={nodeAction}/>
+                  <button className='small-button add-button' title='Agregar elemento' onClick={addElement}/>
                 </div>
               </div>
             </li>
