@@ -1,82 +1,9 @@
-* {
-    background-repeat: no-repeat;
-    font-size: 18px;
-    font: 16px/1.4 Lucida Grande,Lucida Sans Unicode,Lucida Sans,Garuda,Verdana,Tahoma,sans-serif;
-}
-
-*,:before,:after {
-  box-sizing: border-box;
-}
-
-textarea {
-  width: 100%;
-  resize: none;
-}
-
-button {
-  padding: 2px;
-  cursor: pointer;
-  background-color: transparent;
-  border: none;
-}
-
-button:hover{
-  border: 1px solid #cccccc;
-}
-
-button[disabled]{
-    cursor: auto;
-    border: none;
-    background-color: #cccccc;
-    color: #666666;
-}
-
-div {
-    display: block;
-}
-
-h4 {
-    text-align: center; 
-    border-bottom: 1px solid #000; 
-    line-height: 0.1em;
-    margin: 10px 10px 10px 10px; 
-} 
- 
-h4 span { 
-    background:#fff; 
-    padding:0 10px; 
-}
-
-input{
-    padding: 5px;
-    width: 100%;
-}
-
-input:read-only, textarea:read-only {
-    border: none;
-    outline: none;
-}
-
-label{
-    overflow: hidden;
-    white-space: nowrap;
-    text-overflow: ellipsis;
-    word-break: normal;
-}
-
-ol, ul{
-    list-style: none;
-    display: list-item;
-    white-space: nowrap;
-    overflow-x:hidden;
-    overflow-y: hidden;
-    padding-inline-start: 25px;
-}
+@import './Common.css';
 
 .button-box{
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }
 
 .ReactModal__Content{
@@ -88,8 +15,7 @@ ol, ul{
 }
 .ReactModal__Content button{
   border: 1px solid black;
-  margin-left: auto;
-  margin-right: auto;
+  margin: auto;
 }
 
 .cancel-button{
@@ -97,11 +23,11 @@ ol, ul{
 }
 
 .delete-button{
-    background-image: url('../assets/delete_icon_32px.png');
+  background-image: url('../assets/delete_icon_32px.png');
 }
 
 .add-button{
-    background-image: url('../assets/plus_math_50px.png');
+  background-image: url('../assets/plus_math_50px.png');
 }
 
 .upgrade-button{
@@ -118,23 +44,23 @@ ol, ul{
 }
 
 .form{
-    padding: 10px;
-    margin-right: 15px;
+  padding: 10px;
+  margin-right: 15px;
 }
 
 .form button {
-    margin: 0px auto 0px auto;
+  margin: 0px auto 0px auto;
 }
 
 .form div {
-    padding: 2px;
+  padding: 2px;
 }
 
 .hierarchy-container{
-    width: 90%;
-    margin-left: auto;
-    margin-right: auto;
-    display: flex;
+  width: 90%;
+  margin-left: auto;
+  margin-right: auto;
+  display: flex;
 }
 
 .flex-in-line{
@@ -142,13 +68,13 @@ ol, ul{
 }
 
 .level-information{
-    width: 70%;
-    padding: 10px;
+  width: 70%;
+  padding: 10px;
 }
 
 .list-box{
-    padding: 10px;
-    align-items: center;
+  padding: 10px;
+  align-items: center;
 }
 
 .item-box{

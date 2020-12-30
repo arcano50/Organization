@@ -5,7 +5,7 @@ import { useSelector } from 'react-redux'
 import { useForm } from 'react-hook-form'
 import User from './User'
 import './HierarchyNavigation.css'
-import Modal from './Modal'
+import Modal from './AddHierarchyElement'
 
 export default () => {
   /*

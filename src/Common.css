@@ -1,0 +1,94 @@
+* {
+  background-repeat: no-repeat;
+}
+
+*,:before,:after {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+}
+
+button {
+  padding: 5px;
+  cursor: pointer;
+  background-color: transparent;
+}
+
+button:hover {
+  border: 1px solid #cccccc;
+}
+
+button[disabled] {
+  cursor: auto;
+  border: none;
+  background-color: #cccccc;
+  color: #666666;
+}
+
+h4 {
+  text-align: center; 
+  border-bottom: 1px solid #000; 
+  line-height: 0.1em;
+  margin: 10px 10px 10px 10px; 
+}
+
+h4 span { 
+  background:#fff; 
+  padding:0 10px; 
+}
+
+h5 {
+  margin-block-start: 0;
+  margin-block-end: 0;
+}
+
+html {
+  font-size: 18px;
+  font: 16px/1.4 Lucida Grande,Lucida Sans Unicode,Lucida Sans,Garuda,Verdana,Tahoma,sans-serif;
+}
+
+header {
+  width: 100%;
+  height: 50px;
+}
+
+input {
+  padding: 5px;
+  width: 100%;
+}
+
+input:read-only, textarea:read-only {
+  border: none;
+  outline: none;
+}
+
+label{
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  word-break: normal;
+}
+
+ol, ul {
+  list-style: none;
+  white-space: nowrap;
+  overflow-x:hidden;
+  overflow-y: hidden;
+}
+
+strong {
+  font-weight: bold;
+}
+
+textarea {
+  width: 100%;
+  resize: none;
+}
+
+.modal-button-box {
+  display: flex;
+  margin: 10px;
+  align-items: center;
+}

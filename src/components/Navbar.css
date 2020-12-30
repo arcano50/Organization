@@ -1,0 +1,36 @@
+ol, ul {
+  display: block;
+  margin-block-start: 0;
+  margin-block-end: 0;
+}
+
+li {
+  position: relative;
+  float: left;
+}
+
+.container {
+  padding-top: 50px;
+}
+
+.header {
+  position: fixed;
+  top: 0;
+  width: 100%;
+  z-index: 1;
+  background-color: #f0f0f070;
+  font: 100 24px/1.5 Interstate,Lucida Grande,Arial,sans-serif;
+}
+
+.navbar {
+  height: 100%;
+  border: 1px solid #f0f0f0;
+}
+
+.navbar-item {
+  padding: 12px;
+  width: 100px;
+  height: 50px;
+  text-align: center;
+  text-decoration: none;
+}

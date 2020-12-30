@@ -1,9 +1,53 @@
+button {
+  border: none;
+}
+
 .expand-image{
   display: block;
-    background: url('../assets/forward_50px.png') no-repeat;
-    background-position: center;
-    width: 30px;
-    height: 24px;
+  background: url('../assets/forward_50px.png') no-repeat;
+  background-position: center;
+  width: 30px;
+  height: 24px;
+  transition: all 1s;
+}
+
+.expand-image.expanded{
+  transform: rotate(90deg);
+}
+
+.hierarchy-tree{
+  width: 400px;
+  max-width: 400;
+  height: 600px;
+  padding: 10px;
+  border-right: 1px solid #e0e0e0;
+}
+
+.item-container {
+  overflow: hidden;
+}
+
+.item-container-box {
+  max-height: 0;
+  z-index: -1;
+  transform: translateY(-100%);
+  transition: all 1s ease-out;
+  overflow:hidden;
+  position:relative;
+}
+
+.item-container-box.expanded {
+  max-height: none;
+  z-index: 1;
+  transform: translateY(0%);
+  transition: all 1s ease-in-out;
+}
+
+.item-hierarchy-box{
+  border-bottom: 1px solid #f2f2f2;
+  display: flex;
+  flex-direction: row;
+  width: 100%;
 }
 
 .label-box{
@@ -18,42 +62,9 @@
   cursor: pointer;
 }
 
-.hierarchy-tree{
-  width: 400px;
-  max-width: 400;
-  height: 600px;
-  padding: 10px;
-  border-right: 1px solid #e0e0e0;
-}
-
-.item-hierarchy-box{
-  border-bottom: 1px solid #f2f2f2;
-  display: flex;
-  flex-direction: row;
-  width: 100%;
-}
-
 .pair-order{
   display: flex;
   flex-direction: row;
   justify-content: space-between;
   width: 100%;
-}
-
-.item-hierarchy-box.item-box.expanded .expand-image{
-  transition: transform 1s; 
-  transform: rotate(90deg);
-}
-
-.item-hierarchy-box.item-box.expanded:active .expand-image{ 
-  transform: rotate(-90deg);
-}
-
-.item-hierarchy-box.item-box:active .expand-image{
-  transition: transform 1s; 
-  transform: rotate(90deg);
-}
-
-.item-hierarchy-box.item-box .expand-image{
-  transition: transform 1s; 
 }

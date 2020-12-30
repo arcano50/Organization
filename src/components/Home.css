@@ -1,0 +1,61 @@
+a {
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+  color: #FFFFFF;
+}
+
+.element {
+  position: relative;
+  background-image: url('../assets/td_student.jpg');
+  background-size: cover;
+  width: 20%;
+  min-width: 250px;
+  height: 150px;
+  margin-right: 20px;
+  margin-top: 20px;
+}
+
+@media (max-width: 1020px){
+  .element{
+    width: 30%;
+    min-width: 250px;
+  }
+}
+
+@media (max-width: 810px){
+  .element{
+    width: 40%;
+    min-width: 250px;
+  }
+}
+
+.news-container {
+  margin: auto;
+  max-width: 90%;
+  height: 400px;
+  border: 1px solid #5f5f5f;
+  padding: 10px;
+}
+
+.news-title {
+  display: flex;
+  align-items: center;
+  max-width: 40%;
+  height: 100%;
+  padding: 5px;
+  background-color: rgba(0, 0, 0, 0.6);
+  color: #FFFFFF;
+  font-size: 20px;
+  text-align: center;
+  word-wrap: break-word;
+  white-space: pre-wrap;
+}
+
+.row {
+  justify-content: center;
+  display: flex;
+  flex-wrap: wrap;
+}

@@ -1,0 +1,9 @@
+.pie-container {
+  width: 50%;
+}
+
+.pie-container::after {
+  content: "";
+  display: block;
+  padding-bottom: 100%;
+}

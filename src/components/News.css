@@ -1,0 +1,11 @@
+input[type='file']{
+  display: none;
+}
+
+.input-file{
+  border: 1px solid #666666;
+  cursor: pointer;
+  display: inline-block;
+  padding: 5px 10px;
+  white-space: normal;
+}

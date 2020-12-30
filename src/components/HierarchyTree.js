@@ -33,15 +33,14 @@ export default () => {
       item = item.parentNode
     let parent = item.parentNode
     
-    if (item.classList.contains('expanded')){
-      parent.removeChild(parent.lastChild)
-      parent.appendChild(document.createElement('ul'))
-    }
-    else{
+    if (!item.firstChild.classList.contains('expanded')
+        && !parent.lastChild.hasChildNodes()){
       let index = item.getAttribute('index')
       ReactDOM.render(<Expander index={index}/>, parent.lastChild)
     }
     item.classList.toggle('expanded')
+    item.firstChild.classList.toggle('expanded')
+    parent.lastChild.classList.toggle('expanded')
   }
 
   const setElement = ( current ) => {
@@ -77,17 +76,15 @@ export default () => {
 
   const Expander = ( { index } ) => {
     let level = searchElement(index)
-    if (level === {})
-      return null
+    if(level == undefined ||  level.childrenCollection == undefined) return null
     return (
-      level.childrenCollection === undefined ? null :
-      level.childrenCollection === null || level.childrenCollection.length === 0 ?
+      level && level.childrenCollection && level.childrenCollection !== undefined && level.childrenCollection.length === 0 ?
       <li className='default-item'>
         <label>&lt; No hay elementos &gt; </label>
       </li>
       :
         level.childrenCollection.map( node =>
-          <div>
+          <div className='item-container'>
             <li className='item-hierarchy-box item-box'
               index={index + '.' + node.id} onClick={nodeAction}>
               <i className='expand-image'/>
@@ -100,7 +97,7 @@ export default () => {
                 </div>
               </div>
             </li>
-            <ul/>
+            <ul className='item-container-box'/>
           </div>
         )
     )
