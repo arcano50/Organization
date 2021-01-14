@@ -1,5 +1,3 @@
-@import './Common.css';
-
 .button-box{
   display: flex;
   flex-direction: column;

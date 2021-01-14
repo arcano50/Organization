@@ -1,14 +1,18 @@
-import React from 'react';
-import { Route, Redirect } from 'react-router-dom';
+import React from 'react'
+import { useSelector } from 'react-redux'
+import { Route, Redirect } from 'react-router-dom'
 
-export default ({ component: Component, roles, ...rest }) => (
-  <Route { ...rest } render =
-    { props => {
-      const currentUser = {};
-      if (!currentUser)
+export default ({ component: Component, ...rest }) => {
+  const currentUser = useSelector(({ user }) => user)
+  
+  return (
+    <Route { ...rest } render =
+      { props => {
+        console.log(currentUser)
+        if (!currentUser){
           return <Redirect to={{ pathname: '/login', state: { from: props.location } }} />
-      if (roles && roles.indexOf(currentUser.role) === -1)
-          return <Redirect to={{ pathname: '/'}} />
-      return <Component { ...props } />
-  }} />
-)
+        }
+        return <Component { ...props } />
+    }} />
+  )
+}

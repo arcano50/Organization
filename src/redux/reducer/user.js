@@ -1,14 +1,11 @@
-const initialState = {
-  user: {},
-  view:0
-}
+const initialState = { }
 
-const UserReducer = (state = initialState, action) => {
-  switch (action.type){
-    case 'getUser':
-      return {...state, user: action.data}
-    case 'getView':
-      return {...state, view: action.data}
+const UserReducer = (state = initialState, {type, data}) => {
+  switch (type){
+    case 'setUser':
+      return data
+    case 'setToken':
+      return {...state, ...data}
     default:
       return state
   }

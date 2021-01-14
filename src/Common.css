@@ -44,14 +44,14 @@ h5 {
   margin-block-end: 0;
 }
 
-html {
-  font-size: 18px;
-  font: 16px/1.4 Lucida Grande,Lucida Sans Unicode,Lucida Sans,Garuda,Verdana,Tahoma,sans-serif;
-}
-
 header {
   width: 100%;
   height: 50px;
+}
+
+html, input {
+  font-size: 18px;
+  font: 16px/1.4 Lucida Grande,Lucida Sans Unicode,Lucida Sans,Garuda,Verdana,Tahoma,sans-serif;
 }
 
 input {
@@ -74,7 +74,7 @@ label{
 ol, ul {
   list-style: none;
   white-space: nowrap;
-  overflow-x:hidden;
+  overflow-x: hidden;
   overflow-y: hidden;
 }
 

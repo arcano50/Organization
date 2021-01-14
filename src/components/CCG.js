@@ -1,22 +1,28 @@
 import React, { useState } from 'react'
 import Modal from 'react-modal'
-import { Editor } from '@tinymce/tinymce-react';
-import { useForm } from "react-hook-form"
+import action from '../redux/action/index'
+import { Editor } from '@tinymce/tinymce-react'
+import { useDispatch, useSelector} from 'react-redux'
+import { useForm } from 'react-hook-form'
 import './News.css'
 
-export default ({open}) => {
+export default () => {
+  const isOpen = useSelector(({ccg}) => ccg.visibility)
+  const dispatch = useDispatch()
 
-  const [isOpen, setIsOpen] = useState(open)
+  const { handleSubmit, register, errors } = useForm()
 
-  const close = () => setIsOpen(false)
+  const [title, setTitle] = useState('')
+  const [content, setContent] = useState('')
 
-  const CCG = () => {
-    const { handleSubmit, register, errors } = useForm()
-    const [title, setTitle] = useState('')
-    const [content, setContent] = useState('')
+  const close = () => dispatch( action.ccg.setVisibility(false) )
 
-    return (
-      <>
+  return (
+    <Modal
+      ariaHideApp={false}
+      isOpen={isOpen}
+      onRequestClose={close}
+      contentLabel='Enviar CCG'>
         <h4><span>Enviar CCG</span></h4>
         <form className='form'>
           <div>
@@ -63,18 +69,9 @@ export default ({open}) => {
             }}
             onChange={e => setContent(e.target.getContent())}
           />
-        </form>
-      </>
-    )
-  }
 
-  return (
-    <Modal
-      ariaHideApp={false}
-      isOpen={isOpen}
-      onRequestClose={close}
-      contentLabel='Enviar CCG'>
-        <CCG/>
+          <button onClick={close}>Cerrar</button>
+        </form>
     </Modal>
   )
 }

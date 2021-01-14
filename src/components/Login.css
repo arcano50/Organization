@@ -1,0 +1,126 @@
+.attractive-text-1 {
+  margin: 24px;
+  font-size: 20px;
+  display: block;
+  text-align: center;
+}
+
+.attractive-text-2 {
+  font-size: 20px;
+  display: block;
+  text-align: center;
+}
+
+.attractive-text-3 {
+  font-size: 18px;
+  display: block;
+  text-align: center;
+}
+
+.error-container {
+  position: absolute;
+  display: flex;
+  margin: 55px 0 10px 20px;
+}
+
+.error-message {
+  color: #ff0000;
+  font-size: 12px;
+}
+
+.floating-placeholder {
+  height: 75px;
+  display: flex;
+}
+
+.floating-placeholder input {
+  margin: 20px;
+}
+
+.for-input {
+  color: #80868b;
+  margin: 27px;
+  position: absolute;
+  z-index: 1;
+  pointer-events: none;
+  transition: all .25s;
+}
+
+input:focus ~ .for-input,
+input.is-not-empty ~ .for-input {
+  color: #444ddd;
+  margin: 22px;
+  transform: translateY(-25px);
+}
+
+input[isValid="false"] ~ .for-input {
+  color: #ff0000;
+}
+
+input[isValid="false"]{
+  border: 1px solid #ff00008b;
+}
+
+input[isValid="false"]:focus{
+  outline: 1px solid #ff0000;
+}
+
+.in-right {
+  position: absolute;
+  margin-left: 400px;
+}
+
+.login-box {
+  margin: auto;
+  width: 400px;
+  height: 500px;
+  padding: 10px;
+  border: 1px solid #f0f0f0;
+}
+
+.login-button {
+  float: right;
+  padding: 10px 20px;
+  border-radius: 4px;
+  margin-right: 20px;
+  font-size: 16px;
+  color: #ffffff;
+  background-color: #4CAF50;
+  outline-color: #00ff00;
+  border: 1px solid #f0f0f0;
+}
+
+.login-slide {
+  position: relative;
+  display: flex;
+  overflow: hidden;
+  height: 200px;
+}
+
+.login-slide-container {
+  transition: all 1s;
+  width: 378px;
+}
+
+.svg {
+  width: 16px;
+  height: 16px;
+  fill: #ff0000;
+  display: block;
+}
+
+.svg-container {
+  width: 25px;
+}
+
+.text-container-pair {
+  height: 60px;
+}
+
+.to-left {
+  margin-left: -400px;
+}
+
+.to-left ~ .in-right {
+  margin-left: 0;
+}

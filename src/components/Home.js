@@ -1,10 +1,13 @@
 import React, { useState } from 'react'
 import Modal from 'react-modal'
+import action from '../redux/action/index'
 import parser from 'html-react-parser'
+import { useDispatch } from 'react-redux'
 
 import './Home.css'
 
 export default () => {
+  const dispatch = useDispatch()
 
   const [isOpen, setIsOpen] = useState(false)
   const [content, setContent] = useState()

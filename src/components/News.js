@@ -1,35 +1,35 @@
 import React, {useEffect, useState} from 'react'
 import Modal from 'react-modal'
 import action from '../redux/action/index'
-import { Editor } from '@tinymce/tinymce-react';
+import { Editor } from '@tinymce/tinymce-react'
 import { useDispatch, useSelector} from 'react-redux'
-import { useForm } from "react-hook-form"
+import { useForm } from 'react-hook-form'
 import './News.css'
 
 export default () => {
+  const isOpen = useSelector(({news}) => news.visibility)
+  const dispatch = useDispatch()
 
-  const isOpen = useSelector(({modal}) => modal.visibility)
+  const { handleSubmit, register, errors } = useForm()
+  
+  const [title, setTitle] = useState('')
+  const [content, setContent] = useState('')
+  const [image, setImage] = useState()
 
-  //const level = useSelector(({element}) => element.element)
+  let close = () => dispatch( action.news.setVisibiliry(false) )
+  
+  useEffect(() => {
+      setTitle()
+      setContent()
+      setImage()
+  }, [])
 
-  function initialize() {}
-
-  let close = () => {}
-
-  const News = () => {
-    const { handleSubmit, register, errors } = useForm()
-    const [title, setTitle] = useState('')
-    const [content, setContent] = useState('')
-    const [image, setImage] = useState()
-
-    useEffect(() => {
-        setTitle()
-        setContent()
-        setImage()
-    }, [])
-
-    return (
-      <>
+  return (
+    <Modal
+      ariaHideApp={false}
+      isOpen={isOpen}
+      onRequestClose={close}
+      contentLabel='Nueva noticia'>
         <h4><span>Publicar noticia</span></h4>
         <form className='form'>
           <div>
@@ -82,19 +82,9 @@ export default () => {
             }}
             onChange={e => setContent(e.target.getContent())}
           />
-        </form>
-      </>
-    )
-  }
 
-  return (
-    <Modal
-      ariaHideApp={false}
-      isOpen={true}
-      onAfterOpen={initialize}
-      onRequestClose={close}
-      contentLabel='Nueva noticia'>
-        <News/>
+          <button onClick={close}>Cerrar</button>
+        </form>
     </Modal>
   )
 }

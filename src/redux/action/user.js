@@ -1,9 +1,17 @@
-const getUser = user => ({type: 'getUser', data: user})
+import services from '../../services/ComunityServices';
 
-const getView = view => ({type: 'getView', data: view})
+const checkAccount = username => dispatch => services.checkAccount(username)
+  .then(({data}) =>
+    dispatch( {type:'setUser', data} ))
+  .catch(error => console.error(error))
 
-const setUser = user => dispatch => dispatch(getUser(user))
+const login = data => dispatch => services.login(data)
+  .then(({data}) => {
+    if (data.token==0) data = { token: data, logged: false }
+    else data = { token: data, logged: true }
+    dispatch( {type:'setToken', data} )})
+  .catch(error => console.error(error))
 
-const setView = view => dispatch => dispatch(getView(view))
+const setUser  = user => ({type: 'setUser', data: user})
 
-export default { setUser, setView }
+export default { checkAccount, login, setUser }

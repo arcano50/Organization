@@ -2,10 +2,12 @@ import React, {useEffect, useState} from 'react'
 import ReactDOM from 'react-dom';
 import { useDispatch, useSelector} from 'react-redux'
 import action from '../redux/action/index'
-//import './HierarchyNavigation.css'
+import { Roles } from './Utils'
 import './HierarchyTree.css'
 
-// eslint-disable-next-line
+const hierarchyEditPermissions = [Roles.ADMIN]
+const user = JSON.parse(localStorage.getItem('user'))
+
 export default () => {
   const hierarchy = useSelector(({tree}) => tree)
 
@@ -19,9 +21,7 @@ export default () => {
     let path = index.split('.')
     path.shift()
     let id
-    // eslint-disable-next-line
     while ((id = path.shift()) !== undefined && node.childrenCollection !== null)
-      // eslint-disable-next-line
       node = node.childrenCollection.find(children => children.id == id)
     return node
   }
@@ -43,7 +43,7 @@ export default () => {
     parent.lastChild.classList.toggle('expanded')
   }
 
-  const setElement = ( current ) => {
+  const setElement = current => {
     console.log('setElement')
     current.preventDefault()
     current.stopPropagation()
@@ -92,9 +92,11 @@ export default () => {
                 <label className='label-box' onClick={setElement}>
                   { node.name }
                 </label>
+                {hierarchyEditPermissions.includes(user.role) &&
                 <div className='button-box'>
                   <button className='small-button add-button' title='Agregar elemento' onClick={addElement}/>
                 </div>
+                }
               </div>
             </li>
             <ul className='item-container-box'/>

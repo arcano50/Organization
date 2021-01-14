@@ -1,9 +1,46 @@
 .pie-container {
-  width: 50%;
+  width: 320px;
+  height: 320px;
+  min-width: 300px;
+  padding: 10px;
 }
 
-.pie-container::after {
-  content: "";
-  display: block;
-  padding-bottom: 100%;
+.pie-statistics {
+  margin: 20px;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+}
+
+.center {
+  vertical-align: middle;
+}
+
+.chart-titles {
+  margin: 20px;
+  width: 250px;
+  float: left;
+}
+
+.color-red{
+  fill: #ff4900;
+}
+
+.color-green {
+  fill: #15ff00
+}
+
+.color-blue {
+  fill:#009dff
+}
+
+.label-margin {
+  font-family: 'Times New Roman', Times, serif;
+  font-size: 20px;
+  margin: 0 5px;
+}
+
+.right {
+  float: right;
 }

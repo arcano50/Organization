@@ -2,7 +2,12 @@ import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { useForm } from 'react-hook-form'
 import action from '../redux/action/index'
+import { Roles } from './Utils'
 import './HierarchyNavigation.css'
+
+const editPermissions = [Roles.ADMIN]
+
+const user = JSON.parse(localStorage.getItem('user'))
 
 const AddressInformation = ( { object } ) => {
   const { handleSubmit, register, errors } = useForm()
@@ -79,11 +84,13 @@ const AddressInformation = ( { object } ) => {
             {errors.address && errors.address.message}
           </div>
         </form>
-        <div className='button-box'>
-          <button className='small-button edit-button' title='Editar' hidden={!readOnly} onClick={() => setReadOnly(false)}/>
-          <button className='small-button save-button' title='Guardar' hidden={readOnly} onClick={() => setReadOnly(true)}/>
-          <button className='small-button cancel-button' title='Cancelar' hidden={readOnly} onClick={() => setReadOnly(true)}/>
-        </div>
+        {editPermissions.includes(user.role) &&
+          <div className='button-box'>
+            <button className='small-button edit-button' title='Editar' hidden={!readOnly} onClick={() => setReadOnly(false)}/>
+            <button className='small-button save-button' title='Guardar' hidden={readOnly} onClick={() => setReadOnly(true)}/>
+            <button className='small-button cancel-button' title='Cancelar' hidden={readOnly} onClick={() => setReadOnly(true)}/>
+          </div>
+        }
       </div>
     </>
   )
@@ -234,11 +241,13 @@ export default () => {
               </div>
             </div>
           </form>
-          <div className='button-box'>
-            <button className='small-button edit-button' title='Editar' hidden={!readOnly} onClick={() => setReadOnly(false)}/>
-            <button className='small-button save-button' title='Guardar' hidden={readOnly} onClick={() => {setReadOnly(true); save()}}/>
-            <button className='small-button cancel-button' title='Cancelar' hidden={ readOnly} onClick={() => setReadOnly(true)}/>
-          </div>
+          {editPermissions.includes(user.role) &&
+            <div className='button-box'>
+              <button className='small-button edit-button' title='Editar' hidden={!readOnly} onClick={() => setReadOnly(false)}/>
+              <button className='small-button save-button' title='Guardar' hidden={readOnly} onClick={() => {setReadOnly(true); save()}}/>
+              <button className='small-button cancel-button' title='Cancelar' hidden={ readOnly} onClick={() => setReadOnly(true)}/>
+            </div>
+          }
         </div>
       </>
     )
